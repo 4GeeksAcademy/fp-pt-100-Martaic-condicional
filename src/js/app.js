@@ -23,27 +23,49 @@ import "../style/index.css";
     }
  */
 function render(variables = {}) {
-  console.log("These are the current variables: ", variables); // print on the console
-  // here we ask the logical questions to make decisions on how to build the html
-  // if includeCover==false then we reset the cover code without the <img> tag to make the cover transparent.
-  let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
-  if (variables.includeCover == false) cover = "<div class='cover'></div>";
+  console.log("Estas son las variables actuales:", variables);
 
-  // reset the website body with the new html output
-  document.querySelector("#widget_content").innerHTML = `<div class="widget">
-            ${cover}
-          <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
-          <h2>Web Developer</h2>
-          <h3>Miami, USA</h3>
-          <ul class="position-right">
-            <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/school/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy"><i class="fab fa-instagram"></i></a></li>
+  let cover = "";
+  if (variables.includeCover) {
+    cover = `<div class="cover"><img src="https://plus.unsplash.com/premium_photo-1661877737564-3dfd7282efcb?q=80&w=2100&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Cover Image" /></div>`;
+  } else {
+    cover = "<div class='cover'><h1>NO HAY IMAGEN</h1></div>";
+  }
+
+  let fullName = `${variables.name || "Nombre"} ${variables.lastName ||
+    "Apellido"}`;
+
+  document.querySelector("#widget_content").innerHTML = `
+        <div class="widget">
+          ${cover}
+          <img src="${variables.avatarURL || ""}" class="photo" alt="Avatar" />
+          <h1>${fullName}</h1>
+          <h2>${variables.role || "Profesión"}</h2>
+          <h3>${variables.city || "Ciudad"}, ${variables.country || "Pais"}</h3>
+          <ul class="${variables.socialMediaPosition || "position-right"}">
+            <li>
+              <a href="${variables.twitter || "#"}" target="_blank">
+                <i class="fab fa-twitter"></i>
+              </a>
+            </li>
+            <li>
+              <a href="${variables.github || "#"}" target="_blank">
+                <i class="fab fa-github"></i>
+              </a>
+            </li>
+            <li>
+              <a href="${variables.linkedin || "#"}" target="_blank">
+                <i class="fab fa-linkedin"></i>
+              </a>
+            </li>
+            <li>
+              <a href="${variables.instagram || "#"}" target="_blank">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </li>
           </ul>
         </div>
-    `;
+      `;
 }
 
 /**
@@ -56,7 +78,7 @@ window.onload = function() {
     // this is the image's url that will be used as a background for the profile cover
     background: "https://images.unsplash.com/photo-1511974035430-5de47d3b95da",
     // this is the url for the profile avatar
-    avatarURL: "https://randomuser.me/api/portraits/women/42.jpg",
+    avatarURL: "https://avatars.githubusercontent.com/u/159387209?v=4",
     // social media bar position (left or right)
     socialMediaPosition: "position-left",
     // social media usernames
